@@ -1,9 +1,22 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MegaDeskASP.NetCore.Data;
+using MegaDeskASP.NetCore.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<MegaDeskASPNetCoreContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MegaDeskASPNetCoreContext") ?? throw new InvalidOperationException("Connection string 'MegaDeskASPNetCoreContext' not found.")));
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.Initialize(services);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
