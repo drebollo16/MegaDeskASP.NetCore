@@ -14,10 +14,10 @@ namespace MegaDeskASP.NetCore.Models
         {
             if (context == null || context.Desk == null)
             {
-                throw new ArgumentNullException("Null RazorPagesMovieContext");
+                throw new ArgumentNullException("Null MegaDeskASPNetCoreContext");
             }
 
-            // Look for any movies.
+            // Look for any desk.
             if (context.Desk.Any())
             {
                 return;   // DB has been seeded
